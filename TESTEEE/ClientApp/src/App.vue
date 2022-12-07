@@ -42,6 +42,7 @@ export default {
         padding: 0px;
         list-style-type: none;
         width: 100%;
+        background-color: #e0edf4;
     }
 
         table tr td {
@@ -53,7 +54,7 @@ export default {
         }
 
         table thead th {
-            background-color: rgb(184, 208, 216) !important;
+            background-color: rgb(184, 208, 216);
             font-size: 1.2em;
             padding: 10px 0px;
             text-align: center !important;

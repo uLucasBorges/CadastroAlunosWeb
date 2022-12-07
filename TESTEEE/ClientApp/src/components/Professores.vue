@@ -1,10 +1,10 @@
 <template>
 
     <div>
-        <h1> {{titulo}} </h1>
+        <h1>  </h1>
         <table>
             <thead>
-            <th>Cód.</th>
+            <th>Cod.</th>
             <th>Nome</th>
             <th>Alunos</th>
             </thead>
@@ -16,7 +16,7 @@
 
                     <router-link v-bind:to="`/alunos/${professor.id}`"
                                  tag="td"
-                                 style="cursor:pointer">{{professor.nome}}</router-link>
+                                 style="cursor:pointer"> <td> {{professor.nome}} </td></router-link>
 
                     <td td class="colPequeno">
                         <router-link v-bind:to="`/alunos/${professor.id}`"
@@ -63,7 +63,8 @@
             };
         },
         created() {
-                this.get()
+            this.get()
+            this.getName(this.professorId);
         },
         props: {},
 
@@ -76,6 +77,15 @@
 
                         this.professores = resultado.data;
                         this.message = resultado.message;
+                    })
+            },
+
+            getName(id) {
+                axios
+                    .get(`https://localhost:7038/api/professor/${id}`)
+                    .then((resultado) => {
+                        console.log(resultado)
+                        this.name = resultado.data.nome;
                     })
             }
         },

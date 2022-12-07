@@ -2,7 +2,7 @@
 
 
     <div>
-        <h1> Alunos </h1>
+        <h1> {{titulo}} {{name}} </h1>
         <div>
 
 
@@ -15,24 +15,23 @@
             <th>Mat.</th>
             <th>Nome</th>
             <th>Sobrenome</th>
-            <th>Opcoes</th>
+            <th>Opções</th>
             </thead>
-            <!-- <tbody v-if="alunos.lenght"> -->
+
             <tbody>
 
 
+                <!-- <td>{{aluno.id}}</td> -->
                 <tr v-for="aluno of alunos" v-bind:key="aluno">
-                    <!-- <td>{{aluno.id}}</td> -->
-                    <td class="colPequeno"> {{aluno.id}}</td>
+                    <td class="colPequeno"> {{aluno.id}} </td>
                     <router-link :to="`/alunoDetalhe/${aluno.id}`" tag="td" style="cursor: pointer">
-                        <td> {{aluno.nome}} </td>
+                        <td> {{aluno.nome}}  </td>
                     </router-link>
-                    <td> {{aluno.sobrenome}}</td>
+                    <td> {{aluno.sobrenome}} </td>
                     <td class="colPequeno">
                         <button class="btn btn_Danger" @click="remover(aluno)"> Remover </button>
                     </td>
                 </tr>
-
 
             </tbody>
         </table>
@@ -57,53 +56,79 @@
         components: {
 
         },
-        name: 'Alunos',
+        name: 'ALunos',
 
         data() {
             return {
                 titulo: "Professor:",
-                professorId: 2,
-                nome: "",
+                professores: [{}],
                 alunos: [{}],
-                alunosByProf: [],
-                professores: [],
-                message: "",
-                success: "",
-                data: [{}],
                 aluno: {},
-                professor: {},
-                professorNome: ''
+                professorId: 2,
+                name : ''
+
 
             };
         },
-        created() { 
-         this.get()
+        created() {
+            this.get()
+            this.getALunos();
+            this.getName(this.professorId);
         },
         props: {},
 
         methods: {
-            remover(aluno) {
-                axios.delete(`https://localhost:7038/api/delete/aluno/${aluno.id}`)
-                let indice = this.alunos.indexOf(aluno);
-                this.alunos.splice(indice, 1);
-
-            },
-
             get() {
                 axios
-                    .get('https://localhost:7038/api/alunos/list')
+                    .get('https://localhost:7038/api/professores/list')
                     .then((resultado) => {
-                        console.log(resultado.data)
+                        console.log(resultado)
+
+                        this.professores = resultado.data;
+                        this.message = resultado.message;
+                    })
+            },
+
+
+             getName(id) {
+                axios
+                    .get(`https://localhost:7038/api/professor/${id}`)
+                    .then((resultado) => {
+                        console.log(resultado.nome)
+
+                        this.name = resultado.data.nome;
+                    })
+            }, 
+
+
+            getALunos() {
+                axios
+                    .get(`https://localhost:7038/api/alunos/by/professor/${this.professorId}`)
+                    .then((resultado) => {
+                        console.log(resultado)
 
                         this.alunos = resultado.data;
                         this.message = resultado.message;
                     })
+            }, 
+
+            getBy(id) {
+                axios
+                    .get(`https://localhost:7038/api/alunos/search/${id}`)
+                    .then(resultado => {
+                        // console.log(JSON.stringify(alunos))
+                        this.aluno = resultado.data;
+                        this.message = resultado.message;
+                    })
             }
+
+
         },
     }
+
+ 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
     Input {
@@ -136,5 +161,4 @@
             margin: 0px;
             border: 0;
         }
-
 </style>
