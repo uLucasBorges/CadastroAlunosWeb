@@ -1,33 +1,42 @@
 ﻿using System.Threading.Tasks;
+using ApiCadastroAlunos.Core.Interfaces;
 using ApiCadastroAlunos.Core.Models;
-using GeekShopping.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekShopping.Web.Controllers
 {
     public class SchoolController : Controller
     {
-        private readonly IProductService _service;
+        private readonly IAlunoService _service;
 
-        public SchoolController(IProductService service)
+        public SchoolController(IAlunoService service)
         {
             _service = service;
         }
 
         [HttpGet("list")]
         public async Task<IActionResult> List()
+        
         {
-            var products = await _service.FindAllProducts();
+            var products = await _service.Get();
             return Ok(products);
         }
 
 
-        [HttpPost]
+        [HttpGet("ById")]
+        public async Task<IActionResult> ById(int Id = 4004)
+        {
+            var products = await _service.GetById(Id);
+            return Ok(products);
+        }
+
+
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody]Aluno model)
         {
             if (ModelState.IsValid)
             {
-                var products = await _service.CreateProduct(model);
+                var products = await _service.Create(model);
                 if (products != null)
                 {
                     return Ok(model);
@@ -40,10 +49,10 @@ namespace GeekShopping.Web.Controllers
         
         
         
-        [HttpGet]
+        [HttpPut("update")]
          public async Task<IActionResult> Update(int id)
         {
-            var result = await _service.FindProductById(id);
+            var result = await _service.GetById(id);
             if (result is null)
             return NotFound();
 
@@ -51,19 +60,14 @@ namespace GeekShopping.Web.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Update([FromBody]Aluno model)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete([FromBody]int id = 4004)
         {
-            if (ModelState.IsValid)
-            {
-                var products = await _service.UpdateProduct(model);
-                if(products != null)
-                {
-                    return Ok(model);
-                }
-            }
+           
+            
+                var products = await _service.Delete(id);   
+                    return Ok(products);
 
-            return BadRequest(model);
         }
 
 

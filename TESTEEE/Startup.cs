@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GeekShopping.Web.Services;
-using GeekShopping.Web.Services.Interfaces;
+using ApiCadastroAlunos.Core.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using TESTEEE.Services;
 using VueCliMiddleware;
 
 namespace TESTEEE
@@ -32,7 +27,11 @@ namespace TESTEEE
             {
                 configuration.RootPath = "ClientApp";
             });
-            services.AddScoped<IProductService, ProductService>();
+
+            //services.AddTransient<IProductService, ProductService>();
+            services.AddHttpClient<IAlunoService, AlunoService>(c =>
+                    c.BaseAddress = new Uri(Configuration["Services:SchoolAPI"])
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
