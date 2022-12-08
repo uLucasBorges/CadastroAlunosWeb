@@ -1,26 +1,57 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using ApiCadastroAlunos.Core.Interfaces;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using TESTEEE.Services;
+using VueCliMiddleware;
 
-namespace TESTEEE
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSpaStaticFiles(configuration =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    configuration.RootPath = "ClientApp";
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+builder.Services.AddHttpClient<IAlunoService, AlunoService>(c => c.BaseAddress = new Uri(builder.Configuration["Services:SchoolAPI"]));
+
+var app = builder.Build();
+
+app.UseRouting();
+app.UseSpaStaticFiles();
+app.UseAuthorization();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+
 }
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+app.UseSpa(spa =>
+{
+    if (app.Environment.IsDevelopment())
+        spa.Options.SourcePath = "ClientApp/";
+    else
+        spa.Options.SourcePath = "dist";
+
+    if (app.Environment.IsDevelopment())
+    {
+        spa.UseVueCli(npmScript: "serve");
+    }
+
+});
+
+
+
+
+app.Run();
