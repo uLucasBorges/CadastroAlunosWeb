@@ -76,14 +76,15 @@
 
             };
         },
-        created() { 
-         this.get()
+        created() {
+            this.login();
+            this.get()
         },
         props: {},
 
         methods: {
             remover(aluno) {
-                axios.delete(`https://localhost:7038/api/delete/aluno/${aluno.id}`)
+                axios.delete(`http://localhost:50598/delete/${aluno.id}`)
                 let indice = this.alunos.indexOf(aluno);
                 this.alunos.splice(indice, 1);
 
@@ -91,14 +92,19 @@
 
             get() {
                 axios
-                    .get('https://localhost:7038/api/alunos/list')
+                    .get('http://localhost:50598/list')
                     .then((resultado) => {
                         console.log(resultado.data)
 
                         this.alunos = resultado.data;
                         this.message = resultado.message;
                     })
-            }
+            },
+
+            login() {
+                axios
+                    .post('http://localhost:50598/login')
+            },
         },
     }
 </script>

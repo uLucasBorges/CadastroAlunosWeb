@@ -76,16 +76,12 @@
         }, created() {
 
             axios
-                .get(`https://localhost:7038/api/alunos/search/${this.id}`)
+                .get(`http://localhost:50598/ById/${this.id}`)
                 .then(resultado => {
-                    console.log(resultado.data.data)
-                    this.aluno = resultado.data.data
+                    console.log(resultado.data)
+                    this.aluno = resultado.data
                 })
-                
-
-             axios
-                 .get('https://localhost:7038/api/professores/list')
-                 .then(resultado => this.professores = resultado.data)
+               
 
         }
 
@@ -98,7 +94,7 @@
 
             editar(aluno) {
 
-                axios.put(`https://localhost:7038/api/set/aluno/${aluno.id}`, aluno)
+                axios.put(`http://localhost:50598/update/${aluno.id}`, aluno)
 
                 this.visualizando = !this.visualizando;
             },
