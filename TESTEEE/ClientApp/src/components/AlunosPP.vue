@@ -71,9 +71,18 @@
             };
         },
         created() {
-            this.get()
-            this.getALunos();
-            this.getName(this.professorId);
+            if (this.$cookies.get('token') != null) {
+                this.get();
+                this.getALunos();
+                this.getName(this.professorId);
+
+
+
+            } else {
+                this.$router.push('/')
+            }
+
+        
         },
         props: {},
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApiCadastroAlunos.Core.Interfaces;
 using ApiCadastroAlunos.Core.Models;
+using CadastroAlunos.Core.DTOs;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +16,7 @@ using RestSharp;
 
 namespace GeekShopping.Web.Controllers
 {
-    [Authorize(Policy = "School")]
+    //[Authorize(Policy = "School")]
     public class SchoolController : Controller
     {
         private readonly IAlunoService _alunoservice;
@@ -25,11 +26,10 @@ namespace GeekShopping.Web.Controllers
             _alunoservice = alunoservice;
         }
 
-        [AllowAnonymous]
-        [HttpPost("/login")]
-        public async Task<IActionResult> Login()
+        [HttpPost("/Log")]
+        public async Task<IActionResult> Login([FromBody]UserDTO user)
         {
-            var JWT = await _alunoservice.Login();
+            var JWT = await _alunoservice.Login(user);
 
             HttpContext.Response.Cookies.Append("token", JWT.Token, new Microsoft.AspNetCore.Http.CookieOptions
             {
@@ -50,7 +50,7 @@ namespace GeekShopping.Web.Controllers
         }
 
         
-        [HttpGet("/ById/{Id}")]
+        [HttpGet("ById/{Id}")]
         public async Task<IActionResult> ById(int Id)
         {
             var products = await _alunoservice.GetById(Id , this.TokenValue());

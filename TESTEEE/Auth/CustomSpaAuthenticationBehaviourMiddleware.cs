@@ -24,20 +24,25 @@ namespace Configuracao.Web.Auth
 
         public async Task InvokeAsync(HttpContext context, IConfiguration configuration)
         {
-            if (context.User.Identity.IsAuthenticated)
-            {
+        
                 await _next(context);
                 return;
-            }
 
-            _responseClearWrapper.Clear(context.Response);
+            //if (context.User.Identity.IsAuthenticated)
+            //{
+            //    await _next(context);
+            //    return;
+            //}
 
-            if (context.Request.Path.StartsWithSegments("/api") || Path.HasExtension(context.Request.Path.Value))
-                context.Response.StatusCode = 401;
-            else
-                context.Response.Redirect(Util.ObterUrlLogin(context, configuration["Services:Login"], "/"));
+            //_responseClearWrapper.Clear(context.Response);
 
-            await context.Response.CompleteAsync();
+            //if (context.Request.Path.StartsWithSegments("/api") || Path.HasExtension(context.Request.Path.Value))
+            //    context.Response.StatusCode = 401;
+            //else
+            //    context.Response.Redirect(Util.ObterUrlLogin(context, configuration["Servicos:Login"], configuration["basePrefix"]));
+
+            //await context.Response.CompleteAsync();
+
         }
 
 

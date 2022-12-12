@@ -1,14 +1,24 @@
 <template>
     <div>
-        <div style="display: flex; width: 50%">
-            <h1>
-                Codigo de aluno: {{aluno.id}}
-            </h1>
+        <div class="barraTop" v-if="this.$router === 'login' || this.$router === '/login'">
+            <nav class="marginPrincipal">
+                <router-link to="/professores"> Professores</router-link>
+                <router-link to="/alunoss"> Alunos</router-link>
+                <router-link to="/cadastrar"> Cadastrar Alunos</router-link>
+            </nav>
 
-            <div class="voltar">
-                <button class="btn btnVoltar" @click="voltar()">Voltar</button>
-                <button class="btn btnEditar" @click="edita()" v-if="!visualizando">Editar</button>
+
+            <div style="display: flex; width: 50%">
+                <h1>
+                    Codigo de aluno: {{aluno.id}}
+                </h1>
+
+                <div class="voltar">
+                    <button class="btn btnVoltar" @click="voltar()">Voltar</button>
+                    <button class="btn btnEditar" @click="edita()" v-if="!visualizando">Editar</button>
+                </div>
             </div>
+
         </div>
 
         <table>
@@ -75,13 +85,24 @@
             }
         }, created() {
 
-            axios
-                .get(`http://localhost:50598/ById/${this.id}`)
-                .then(resultado => {
-                    console.log(resultado.data)
-                    this.aluno = resultado.data
-                })
-               
+
+            if (this.$cookies.get('token') != null) {
+
+
+                axios
+                    .get(`http://localhost:50598/ById/${this.id}`)
+                    .then(resultado => {
+                        console.log(resultado.data)
+                        this.aluno = resultado.data
+                    })
+
+
+
+
+
+            } else {
+                this.$router.push('/')
+            }
 
         }
 

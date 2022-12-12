@@ -77,15 +77,8 @@ namespace TESTEEE.Services
             throw new Exception("houve algum problema..");
         }
             
-            public async Task<UsuarioToken> Login()
+            public async Task<UsuarioToken> Login(UserDTO user)
         {
-            var user = new
-            {
-                name = "lucasavelar",
-                email = "lucas.avelarb@clear.sale",
-                password = "197217Rr@",
-                confirmPassword = "197217Rr@"
-            };
 
             var response = await _client.PostAsJson($"{path}/Authorize/login", user);
 
