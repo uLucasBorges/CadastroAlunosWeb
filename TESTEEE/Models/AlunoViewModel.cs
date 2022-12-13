@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using ApiCadastroAlunos.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiCadastroAlunos.ViewModel
