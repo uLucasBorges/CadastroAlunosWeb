@@ -1,17 +1,12 @@
 <template>
 
+
     <div>
-
-        <div class="barraTop">
-            <nav class="marginPrincipal">
-                <router-link to="/professores"> Professores</router-link>
-                <router-link to="/alunoss"> Alunos</router-link>
-                <router-link to="/cadastrar"> Cadastrar Alunos</router-link>
-            </nav>
-        </div>
-
         <h1> Alunos </h1>
+        <div>
 
+
+        </div>
 
 
 
@@ -42,13 +37,14 @@
             </tbody>
         </table>
 
-
         <!--<div class="not" v-if="alunos.length === 0 && !this.professorId || alunosByProf.length === 0 && this.professorId">
-        <br>
-        <h1>
-            Alunos não encontrados!
-        </h1>
-    </div>-->
+            <br>
+            <h1>
+                Alunos não encontrados!
+            </h1>
+        </div>-->
+
+
     </div>
 </template>
 
@@ -59,6 +55,7 @@
     export default {
 
         components: {
+
         },
         name: 'Alunos',
 
@@ -80,15 +77,8 @@
             };
         },
         created() {
-            if (this.$cookies.get('token') != null) {
-                this.get()
-
-
-            } else {
-                this.$router.push('/')
-            }
-            
-           
+            this.login();
+            this.get()
         },
         props: {},
 
@@ -109,6 +99,11 @@
                         this.alunos = resultado.data;
                         this.message = resultado.message;
                     })
+            },
+
+            login() {
+                axios
+                    .post('http://localhost:50598/login')
             },
         },
     }

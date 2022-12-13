@@ -14,6 +14,6 @@ namespace ApiCadastroAlunos.Core.Interfaces
         public Task<Aluno> GetById(int id, string token);
         public Task<Aluno> Update(Aluno aluno, string token);
         public Task<Aluno> Delete(int id , string token);
-        public Task<UsuarioToken> Login(UserDTO user);
+        public Task<UsuarioToken> Login();
     }
 }

@@ -1,20 +1,7 @@
 <template>
 
     <div>
-
-
-
-
-        <div class="barraTop">
-            <nav class="marginPrincipal">
-                <router-link to="/professores"> Professores</router-link>
-                <router-link to="/alunoss"> Alunos</router-link>
-                <router-link to="/cadastrar"> Cadastrar Alunos</router-link>
-            </nav>
-        </div>
-
-        <h1> Professores </h1>
-
+        <h1>  </h1>
         <table>
             <thead>
             <th>Cod.</th>
@@ -24,7 +11,6 @@
             <!-- <tbody v-if="alunos.lenght"> -->
             <tbody>
                 <tr v-for="professor of professores" v-bind:key="professor">
-
                     <!-- <td>{{aluno.id}}</td> -->
                     <td class="colPequeno"> {{professor.id}}</td>
 
@@ -40,17 +26,17 @@
                 </tr>
             </tbody>
             <!-- <tfoot>
-          não existem alunos encotrados.
-        </tfoot> -->
+              não existem alunos encotrados.
+            </tfoot> -->
         </table>
 
 
         <!--<br>
-    <div v-if="Professores.length === 0">
-        <h1>
-            Professores não encontrados!
-        </h1>
-    </div>-->
+        <div v-if="Professores.length === 0">
+            <h1>
+                Professores não encontrados!
+            </h1>
+        </div>-->
 
 
 
@@ -77,16 +63,8 @@
             };
         },
         created() {
-
-            if (this.$cookies.get('token') != null) {
-                this.get()
-                this.getName(this.professorId);
-
-            } else {
-                this.$router.push('/')
-            }
-
-     
+            this.get()
+            this.getName(this.professorId);
         },
         props: {},
 

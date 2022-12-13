@@ -23,7 +23,11 @@ builder.Services.AddCors();
 
 builder.Services.AddControllers();
 
+var mvcviews = builder.Services.AddControllersWithViews()
+              .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+              .AddNewtonsoftJson();
 
+mvcviews.AddRazorRuntimeCompilation();
 
 
 
@@ -67,13 +71,12 @@ builder.Services.AddAuthentication(options =>
     {
         OnRedirectToLogin = redirectContext =>
         {
-            if (redirectContext.Request.Path.Value.StartsWith("/listp"))
+            if (redirectContext.Request.Path.Value.StartsWith("/list"))
             {
                 redirectContext.Response.Clear();
                 redirectContext.Response.StatusCode = 401;
                 return Task.CompletedTask;
             }
-            redirectContext.Response.Redirect("http://localhost:50598/loginn");
             return Task.CompletedTask;
         },
         OnRedirectToAccessDenied = redirectContext =>

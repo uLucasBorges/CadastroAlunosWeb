@@ -4,18 +4,12 @@ import AlunoDetalhe from "@/components/AlunoDetalhe.vue";
 import AlunosVue from "../components/Alunos.vue";
 import AlunosP from "../components/AlunosPP.vue";
 import CadastrarAluno from "../components/CadastrarAluno.vue";
-import Login from "../components/Login.vue";
 
 const routes = [
     {
         path: "/alunoss",
         name: "alunoss",
         component: AlunosVue,
-    },
-    {
-        path: "/",
-        name: "login",
-        component: Login,
     },
     {
         path: "/Professores",
