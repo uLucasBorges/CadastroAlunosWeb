@@ -1,32 +1,38 @@
 <template>
     <div>
 
-
-        <main class="container">
-            <h2>Login</h2>
-            <form>
-                <div class="input-field">
-                    <input type="text" name="username" id="username"
-                           placeholder="Enter Your Username" required v-model="username">
-                    <div class="underline"></div>
-                </div>
+            <br />
+            <h1>Volte Sempre.</h1>
 
 
 
-                <div class="input-field">
-                    <input type="password" name="password" id="password"
-                           placeholder="Enter Your Password" required v-model="password">
-                    <div class="underline"></div>
-                </div>
+            <main class="container">
 
 
-            </form>
+                <h2>Login</h2>
+                <form>
+                    <div class="input-field">
+                        <input type="text" name="username" id="username"
+                               placeholder="Enter Your Username" required v-model="username">
+                        <div class="underline"></div>
+                    </div>
 
 
-            <button type="submit" @click="login()"> confirm </button>
+
+                    <div class="input-field">
+                        <input type="password" name="password" id="password"
+                               placeholder="Enter Your Password" required v-model="password">
+                        <div class="underline"></div>
+                    </div>
 
 
-        </main>
+                </form>
+
+
+                <button type="submit" @click="login()"> confirm </button>
+
+
+            </main>
 
 
 
@@ -46,12 +52,13 @@
             return {
                 username: '',
                 email: '',
-                password: ''
+                password: '',
+                autenticado: false
 
             };
         },
         created() {
-            
+    
         },
         props: {},
         methods: {
@@ -63,9 +70,14 @@
                     confirmPassword: this.password
                 }
 
-                axios.post(`http://localhost:5001/login`, dados)
+                axios.post(`http://localhost:50598/Log`, dados)
 
-            },
+             
+                    this.$router.push('/alunoss');
+                
+
+                
+            },           
         },
     }
 </script>
@@ -106,12 +118,28 @@
         margin-bottom: 2rem;
         position: relative;
     }
+    
+    h1 {
+        font-weight: 600;
+        margin-bottom: 2rem;
+        position: relative;
+    }
 
-        main h2::before {
+    main h2::before {
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 25px;
+        bottom: 3px;
+        left: 0;
+        border-radius: 8px;
+        background: linear-gradient(45deg, #8e2de2, #4a00e0);
+    }
+         h1::before {
             content: '';
             position: absolute;
             height: 4px;
-            width: 25px;
+            width: 20px;
             bottom: 3px;
             left: 0;
             border-radius: 8px;
@@ -232,4 +260,17 @@
             .footer .social-field.facebook {
                 background: linear-gradient(to right, #1e3c72, #2a5298);
             }
+
+
+    .form-header {
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .gender-title h6 {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #000000c0;
+    }
 </style>
