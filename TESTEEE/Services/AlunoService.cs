@@ -81,10 +81,10 @@ namespace TESTEEE.Services
         {
             var user = new
             {
-                name = "lucasavelar",
-                email = "lucas.avelarb@clear.sale",
-                password = "197217Rr@",
-                confirmPassword = "197217Rr@"
+                name = "",
+                email = "",
+                password = "",
+                confirmPassword = ""
             };
 
             var response = await _client.PostAsJson($"{path}/Authorize/login", user);
